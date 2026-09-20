@@ -14,16 +14,434 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      alerts: {
+        Row: {
+          created_at: string
+          id: string
+          is_read: boolean
+          message: string
+          priority: string
+          title: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          message: string
+          priority?: string
+          title: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          message?: string
+          priority?: string
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      autopay_rules: {
+        Row: {
+          approval_above_cents: number | null
+          consented_at: string | null
+          enabled: boolean
+          id: string
+          never_pay_disputed: boolean
+          require_uncertain_approval: boolean
+          ticket_limit_cents: number | null
+          toll_limit_cents: number | null
+          toll_only: boolean
+          updated_at: string
+          user_id: string
+          vehicle_id: string | null
+        }
+        Insert: {
+          approval_above_cents?: number | null
+          consented_at?: string | null
+          enabled?: boolean
+          id?: string
+          never_pay_disputed?: boolean
+          require_uncertain_approval?: boolean
+          ticket_limit_cents?: number | null
+          toll_limit_cents?: number | null
+          toll_only?: boolean
+          updated_at?: string
+          user_id: string
+          vehicle_id?: string | null
+        }
+        Update: {
+          approval_above_cents?: number | null
+          consented_at?: string | null
+          enabled?: boolean
+          id?: string
+          never_pay_disputed?: boolean
+          require_uncertain_approval?: boolean
+          ticket_limit_cents?: number | null
+          toll_limit_cents?: number | null
+          toll_only?: boolean
+          updated_at?: string
+          user_id?: string
+          vehicle_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "autopay_rules_vehicle_id_fkey"
+            columns: ["vehicle_id"]
+            isOneToOne: false
+            referencedRelation: "vehicles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      documents: {
+        Row: {
+          created_at: string
+          document_type: string
+          id: string
+          issue_id: string | null
+          storage_path: string | null
+          title: string
+          user_id: string
+          vehicle_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          document_type: string
+          id?: string
+          issue_id?: string | null
+          storage_path?: string | null
+          title: string
+          user_id: string
+          vehicle_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          document_type?: string
+          id?: string
+          issue_id?: string | null
+          storage_path?: string | null
+          title?: string
+          user_id?: string
+          vehicle_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "documents_issue_id_fkey"
+            columns: ["issue_id"]
+            isOneToOne: false
+            referencedRelation: "issues"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "documents_vehicle_id_fkey"
+            columns: ["vehicle_id"]
+            isOneToOne: false
+            referencedRelation: "vehicles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      issues: {
+        Row: {
+          amount_cents: number | null
+          created_at: string
+          due_date: string | null
+          id: string
+          issue_type: string
+          issuing_authority: string | null
+          official_payment_url: string | null
+          status: Database["public"]["Enums"]["issue_status"]
+          user_id: string
+          vehicle_id: string
+        }
+        Insert: {
+          amount_cents?: number | null
+          created_at?: string
+          due_date?: string | null
+          id?: string
+          issue_type: string
+          issuing_authority?: string | null
+          official_payment_url?: string | null
+          status?: Database["public"]["Enums"]["issue_status"]
+          user_id: string
+          vehicle_id: string
+        }
+        Update: {
+          amount_cents?: number | null
+          created_at?: string
+          due_date?: string | null
+          id?: string
+          issue_type?: string
+          issuing_authority?: string | null
+          official_payment_url?: string | null
+          status?: Database["public"]["Enums"]["issue_status"]
+          user_id?: string
+          vehicle_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "issues_vehicle_id_fkey"
+            columns: ["vehicle_id"]
+            isOneToOne: false
+            referencedRelation: "vehicles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      partner_applications: {
+        Row: {
+          business_email: string
+          business_name: string
+          business_type: string
+          contact_name: string
+          created_at: string
+          estimated_monthly_volume: number
+          id: string
+          phone: string
+          status: Database["public"]["Enums"]["partner_status"]
+          user_id: string
+          zip_code: string
+        }
+        Insert: {
+          business_email: string
+          business_name: string
+          business_type: string
+          contact_name: string
+          created_at?: string
+          estimated_monthly_volume: number
+          id?: string
+          phone: string
+          status?: Database["public"]["Enums"]["partner_status"]
+          user_id: string
+          zip_code: string
+        }
+        Update: {
+          business_email?: string
+          business_name?: string
+          business_type?: string
+          contact_name?: string
+          created_at?: string
+          estimated_monthly_volume?: number
+          id?: string
+          phone?: string
+          status?: Database["public"]["Enums"]["partner_status"]
+          user_id?: string
+          zip_code?: string
+        }
+        Relationships: []
+      }
+      partner_payouts: {
+        Row: {
+          amount_cents: number
+          created_at: string
+          id: string
+          paid_at: string | null
+          partner_user_id: string
+          period_end: string
+          period_start: string
+          status: string
+        }
+        Insert: {
+          amount_cents: number
+          created_at?: string
+          id?: string
+          paid_at?: string | null
+          partner_user_id: string
+          period_end: string
+          period_start: string
+          status?: string
+        }
+        Update: {
+          amount_cents?: number
+          created_at?: string
+          id?: string
+          paid_at?: string | null
+          partner_user_id?: string
+          period_end?: string
+          period_start?: string
+          status?: string
+        }
+        Relationships: []
+      }
+      payments: {
+        Row: {
+          amount_cents: number
+          created_at: string
+          id: string
+          issue_id: string | null
+          paid_at: string | null
+          processor_reference: string | null
+          status: string
+          user_id: string
+        }
+        Insert: {
+          amount_cents: number
+          created_at?: string
+          id?: string
+          issue_id?: string | null
+          paid_at?: string | null
+          processor_reference?: string | null
+          status?: string
+          user_id: string
+        }
+        Update: {
+          amount_cents?: number
+          created_at?: string
+          id?: string
+          issue_id?: string | null
+          paid_at?: string | null
+          processor_reference?: string | null
+          status?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_issue_id_fkey"
+            columns: ["issue_id"]
+            isOneToOne: false
+            referencedRelation: "issues"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          account_type: string
+          business_name: string | null
+          created_at: string
+          email_verified: boolean
+          full_name: string | null
+          phone: string | null
+          phone_verified: boolean
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          account_type?: string
+          business_name?: string | null
+          created_at?: string
+          email_verified?: boolean
+          full_name?: string | null
+          phone?: string | null
+          phone_verified?: boolean
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          account_type?: string
+          business_name?: string | null
+          created_at?: string
+          email_verified?: boolean
+          full_name?: string | null
+          phone?: string | null
+          phone_verified?: boolean
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      referrals: {
+        Row: {
+          created_at: string
+          customer_label: string
+          id: string
+          partner_user_id: string
+          plate_count: number
+          staff_code: string | null
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          customer_label: string
+          id?: string
+          partner_user_id: string
+          plate_count?: number
+          staff_code?: string | null
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          customer_label?: string
+          id?: string
+          partner_user_id?: string
+          plate_count?: number
+          staff_code?: string | null
+          status?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      vehicles: {
+        Row: {
+          autopay_enabled: boolean
+          created_at: string
+          id: string
+          monitoring_status: string
+          nickname: string | null
+          plate: string
+          state: string
+          user_id: string
+        }
+        Insert: {
+          autopay_enabled?: boolean
+          created_at?: string
+          id?: string
+          monitoring_status?: string
+          nickname?: string | null
+          plate: string
+          state: string
+          user_id: string
+        }
+        Update: {
+          autopay_enabled?: boolean
+          created_at?: string
+          id?: string
+          monitoring_status?: string
+          nickname?: string | null
+          plate?: string
+          state?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "customer" | "partner" | "admin"
+      issue_status: "due" | "paid" | "action_needed" | "urgent" | "under_review"
+      partner_status: "pending" | "approved" | "declined"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +568,10 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["customer", "partner", "admin"],
+      issue_status: ["due", "paid", "action_needed", "urgent", "under_review"],
+      partner_status: ["pending", "approved", "declined"],
+    },
   },
 } as const
