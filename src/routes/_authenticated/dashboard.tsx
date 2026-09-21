@@ -1,1 +1,2 @@
-import {createFileRoute} from "@tanstack/react-router";import {Overview} from "@/components/platora/dashboard-pages";export const Route=createFileRoute("/_authenticated/dashboard")({head:()=>({meta:[{title:"Dashboard — Platora"},{name:"description",content:"Your Platora vehicle monitoring overview."},{property:"og:title",content:"Platora Dashboard"},{property:"og:description",content:"Private vehicle issue overview."},{property:"og:type",content:"website"},{name:"twitter:card",content:"summary"}]}),component:Overview});
+import {createFileRoute,Outlet} from "@tanstack/react-router";
+export const Route=createFileRoute("/_authenticated/dashboard")({component:()=> <Outlet/>});
