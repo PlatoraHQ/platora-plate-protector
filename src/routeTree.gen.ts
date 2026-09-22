@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as CheckRouteImport } from './routes/check'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
@@ -21,11 +22,26 @@ import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SupportRouteImport } from './routes/support'
 import { Route as VerifyRouteImport } from './routes/verify'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as PartnerLoginRouteImport } from './routes/partner.login'
+import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
+import { Route as AuthenticatedDashboardAlertsRouteImport } from './routes/_authenticated/dashboard.alerts'
+import { Route as AuthenticatedDashboardAutopayRouteImport } from './routes/_authenticated/dashboard.autopay'
+import { Route as AuthenticatedDashboardDocumentsRouteImport } from './routes/_authenticated/dashboard.documents'
+import { Route as AuthenticatedDashboardIssuesRouteImport } from './routes/_authenticated/dashboard.issues'
+import { Route as AuthenticatedDashboardPaymentsRouteImport } from './routes/_authenticated/dashboard.payments'
+import { Route as AuthenticatedDashboardSettingsRouteImport } from './routes/_authenticated/dashboard.settings'
+import { Route as AuthenticatedDashboardVehiclesRouteImport } from './routes/_authenticated/dashboard.vehicles'
+import { Route as AuthenticatedPartnerDashboardRouteImport } from './routes/_authenticated/partner.dashboard'
+import { Route as AuthenticatedDashboardIssuesIssueIdRouteImport } from './routes/_authenticated/dashboard.issues.$issueId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CheckRoute = CheckRouteImport.update({
@@ -83,11 +99,76 @@ const VerifyRoute = VerifyRouteImport.update({
   path: '/verify',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const PartnerLoginRoute = PartnerLoginRouteImport.update({
   id: '/partner/login',
   path: '/partner/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedDashboardIndexRoute =
+  AuthenticatedDashboardIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardAlertsRoute =
+  AuthenticatedDashboardAlertsRouteImport.update({
+    id: '/alerts',
+    path: '/alerts',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardAutopayRoute =
+  AuthenticatedDashboardAutopayRouteImport.update({
+    id: '/autopay',
+    path: '/autopay',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardDocumentsRoute =
+  AuthenticatedDashboardDocumentsRouteImport.update({
+    id: '/documents',
+    path: '/documents',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardIssuesRoute =
+  AuthenticatedDashboardIssuesRouteImport.update({
+    id: '/issues',
+    path: '/issues',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardPaymentsRoute =
+  AuthenticatedDashboardPaymentsRouteImport.update({
+    id: '/payments',
+    path: '/payments',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardSettingsRoute =
+  AuthenticatedDashboardSettingsRouteImport.update({
+    id: '/settings',
+    path: '/settings',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardVehiclesRoute =
+  AuthenticatedDashboardVehiclesRouteImport.update({
+    id: '/vehicles',
+    path: '/vehicles',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedPartnerDashboardRoute =
+  AuthenticatedPartnerDashboardRouteImport.update({
+    id: '/partner/dashboard',
+    path: '/partner/dashboard',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedDashboardIssuesIssueIdRoute =
+  AuthenticatedDashboardIssuesIssueIdRouteImport.update({
+    id: '/$issueId',
+    path: '/$issueId',
+    getParentRoute: () => AuthenticatedDashboardIssuesRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -102,7 +183,18 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/support': typeof SupportRoute
   '/verify': typeof VerifyRoute
+  '/dashboard': typeof AuthenticatedDashboardRouteWithChildren
   '/partner/login': typeof PartnerLoginRoute
+  '/dashboard/alerts': typeof AuthenticatedDashboardAlertsRoute
+  '/dashboard/autopay': typeof AuthenticatedDashboardAutopayRoute
+  '/dashboard/documents': typeof AuthenticatedDashboardDocumentsRoute
+  '/dashboard/issues': typeof AuthenticatedDashboardIssuesRouteWithChildren
+  '/dashboard/payments': typeof AuthenticatedDashboardPaymentsRoute
+  '/dashboard/settings': typeof AuthenticatedDashboardSettingsRoute
+  '/dashboard/vehicles': typeof AuthenticatedDashboardVehiclesRoute
+  '/partner/dashboard': typeof AuthenticatedPartnerDashboardRoute
+  '/dashboard/': typeof AuthenticatedDashboardIndexRoute
+  '/dashboard/issues/$issueId': typeof AuthenticatedDashboardIssuesIssueIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -118,10 +210,21 @@ export interface FileRoutesByTo {
   '/support': typeof SupportRoute
   '/verify': typeof VerifyRoute
   '/partner/login': typeof PartnerLoginRoute
+  '/dashboard/alerts': typeof AuthenticatedDashboardAlertsRoute
+  '/dashboard/autopay': typeof AuthenticatedDashboardAutopayRoute
+  '/dashboard/documents': typeof AuthenticatedDashboardDocumentsRoute
+  '/dashboard/issues': typeof AuthenticatedDashboardIssuesRouteWithChildren
+  '/dashboard/payments': typeof AuthenticatedDashboardPaymentsRoute
+  '/dashboard/settings': typeof AuthenticatedDashboardSettingsRoute
+  '/dashboard/vehicles': typeof AuthenticatedDashboardVehiclesRoute
+  '/partner/dashboard': typeof AuthenticatedPartnerDashboardRoute
+  '/dashboard': typeof AuthenticatedDashboardIndexRoute
+  '/dashboard/issues/$issueId': typeof AuthenticatedDashboardIssuesIssueIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/check': typeof CheckRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/how-it-works': typeof HowItWorksRoute
@@ -133,7 +236,18 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/support': typeof SupportRoute
   '/verify': typeof VerifyRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRouteWithChildren
   '/partner/login': typeof PartnerLoginRoute
+  '/_authenticated/dashboard/alerts': typeof AuthenticatedDashboardAlertsRoute
+  '/_authenticated/dashboard/autopay': typeof AuthenticatedDashboardAutopayRoute
+  '/_authenticated/dashboard/documents': typeof AuthenticatedDashboardDocumentsRoute
+  '/_authenticated/dashboard/issues': typeof AuthenticatedDashboardIssuesRouteWithChildren
+  '/_authenticated/dashboard/payments': typeof AuthenticatedDashboardPaymentsRoute
+  '/_authenticated/dashboard/settings': typeof AuthenticatedDashboardSettingsRoute
+  '/_authenticated/dashboard/vehicles': typeof AuthenticatedDashboardVehiclesRoute
+  '/_authenticated/partner/dashboard': typeof AuthenticatedPartnerDashboardRoute
+  '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
+  '/_authenticated/dashboard/issues/$issueId': typeof AuthenticatedDashboardIssuesIssueIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -150,7 +264,18 @@ export interface FileRouteTypes {
     | '/signup'
     | '/support'
     | '/verify'
+    | '/dashboard'
     | '/partner/login'
+    | '/dashboard/alerts'
+    | '/dashboard/autopay'
+    | '/dashboard/documents'
+    | '/dashboard/issues'
+    | '/dashboard/payments'
+    | '/dashboard/settings'
+    | '/dashboard/vehicles'
+    | '/partner/dashboard'
+    | '/dashboard/'
+    | '/dashboard/issues/$issueId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -166,9 +291,20 @@ export interface FileRouteTypes {
     | '/support'
     | '/verify'
     | '/partner/login'
+    | '/dashboard/alerts'
+    | '/dashboard/autopay'
+    | '/dashboard/documents'
+    | '/dashboard/issues'
+    | '/dashboard/payments'
+    | '/dashboard/settings'
+    | '/dashboard/vehicles'
+    | '/partner/dashboard'
+    | '/dashboard'
+    | '/dashboard/issues/$issueId'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/check'
     | '/forgot-password'
     | '/how-it-works'
@@ -180,11 +316,23 @@ export interface FileRouteTypes {
     | '/signup'
     | '/support'
     | '/verify'
+    | '/_authenticated/dashboard'
     | '/partner/login'
+    | '/_authenticated/dashboard/alerts'
+    | '/_authenticated/dashboard/autopay'
+    | '/_authenticated/dashboard/documents'
+    | '/_authenticated/dashboard/issues'
+    | '/_authenticated/dashboard/payments'
+    | '/_authenticated/dashboard/settings'
+    | '/_authenticated/dashboard/vehicles'
+    | '/_authenticated/partner/dashboard'
+    | '/_authenticated/dashboard/'
+    | '/_authenticated/dashboard/issues/$issueId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   CheckRoute: typeof CheckRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   HowItWorksRoute: typeof HowItWorksRoute
@@ -206,6 +354,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/check': {
@@ -285,6 +440,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VerifyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/partner/login': {
       id: '/partner/login'
       path: '/partner/login'
@@ -292,11 +454,139 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PartnerLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/dashboard/': {
+      id: '/_authenticated/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof AuthenticatedDashboardIndexRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/alerts': {
+      id: '/_authenticated/dashboard/alerts'
+      path: '/alerts'
+      fullPath: '/dashboard/alerts'
+      preLoaderRoute: typeof AuthenticatedDashboardAlertsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/autopay': {
+      id: '/_authenticated/dashboard/autopay'
+      path: '/autopay'
+      fullPath: '/dashboard/autopay'
+      preLoaderRoute: typeof AuthenticatedDashboardAutopayRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/documents': {
+      id: '/_authenticated/dashboard/documents'
+      path: '/documents'
+      fullPath: '/dashboard/documents'
+      preLoaderRoute: typeof AuthenticatedDashboardDocumentsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/issues': {
+      id: '/_authenticated/dashboard/issues'
+      path: '/issues'
+      fullPath: '/dashboard/issues'
+      preLoaderRoute: typeof AuthenticatedDashboardIssuesRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/payments': {
+      id: '/_authenticated/dashboard/payments'
+      path: '/payments'
+      fullPath: '/dashboard/payments'
+      preLoaderRoute: typeof AuthenticatedDashboardPaymentsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/settings': {
+      id: '/_authenticated/dashboard/settings'
+      path: '/settings'
+      fullPath: '/dashboard/settings'
+      preLoaderRoute: typeof AuthenticatedDashboardSettingsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/vehicles': {
+      id: '/_authenticated/dashboard/vehicles'
+      path: '/vehicles'
+      fullPath: '/dashboard/vehicles'
+      preLoaderRoute: typeof AuthenticatedDashboardVehiclesRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/partner/dashboard': {
+      id: '/_authenticated/partner/dashboard'
+      path: '/partner/dashboard'
+      fullPath: '/partner/dashboard'
+      preLoaderRoute: typeof AuthenticatedPartnerDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard/issues/$issueId': {
+      id: '/_authenticated/dashboard/issues/$issueId'
+      path: '/$issueId'
+      fullPath: '/dashboard/issues/$issueId'
+      preLoaderRoute: typeof AuthenticatedDashboardIssuesIssueIdRouteImport
+      parentRoute: typeof AuthenticatedDashboardIssuesRoute
+    }
   }
 }
 
+interface AuthenticatedDashboardIssuesRouteChildren {
+  AuthenticatedDashboardIssuesIssueIdRoute: typeof AuthenticatedDashboardIssuesIssueIdRoute
+}
+
+const AuthenticatedDashboardIssuesRouteChildren: AuthenticatedDashboardIssuesRouteChildren =
+  {
+    AuthenticatedDashboardIssuesIssueIdRoute:
+      AuthenticatedDashboardIssuesIssueIdRoute,
+  }
+
+const AuthenticatedDashboardIssuesRouteWithChildren =
+  AuthenticatedDashboardIssuesRoute._addFileChildren(
+    AuthenticatedDashboardIssuesRouteChildren,
+  )
+
+interface AuthenticatedDashboardRouteChildren {
+  AuthenticatedDashboardAlertsRoute: typeof AuthenticatedDashboardAlertsRoute
+  AuthenticatedDashboardAutopayRoute: typeof AuthenticatedDashboardAutopayRoute
+  AuthenticatedDashboardDocumentsRoute: typeof AuthenticatedDashboardDocumentsRoute
+  AuthenticatedDashboardIssuesRoute: typeof AuthenticatedDashboardIssuesRouteWithChildren
+  AuthenticatedDashboardPaymentsRoute: typeof AuthenticatedDashboardPaymentsRoute
+  AuthenticatedDashboardSettingsRoute: typeof AuthenticatedDashboardSettingsRoute
+  AuthenticatedDashboardVehiclesRoute: typeof AuthenticatedDashboardVehiclesRoute
+  AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
+}
+
+const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
+  {
+    AuthenticatedDashboardAlertsRoute: AuthenticatedDashboardAlertsRoute,
+    AuthenticatedDashboardAutopayRoute: AuthenticatedDashboardAutopayRoute,
+    AuthenticatedDashboardDocumentsRoute: AuthenticatedDashboardDocumentsRoute,
+    AuthenticatedDashboardIssuesRoute:
+      AuthenticatedDashboardIssuesRouteWithChildren,
+    AuthenticatedDashboardPaymentsRoute: AuthenticatedDashboardPaymentsRoute,
+    AuthenticatedDashboardSettingsRoute: AuthenticatedDashboardSettingsRoute,
+    AuthenticatedDashboardVehiclesRoute: AuthenticatedDashboardVehiclesRoute,
+    AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
+  }
+
+const AuthenticatedDashboardRouteWithChildren =
+  AuthenticatedDashboardRoute._addFileChildren(
+    AuthenticatedDashboardRouteChildren,
+  )
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRouteWithChildren
+  AuthenticatedPartnerDashboardRoute: typeof AuthenticatedPartnerDashboardRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRouteWithChildren,
+  AuthenticatedPartnerDashboardRoute: AuthenticatedPartnerDashboardRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   CheckRoute: CheckRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
   HowItWorksRoute: HowItWorksRoute,
