@@ -171,4 +171,4 @@
 @utility eyebrow { color: var(--color-brand-blue); font-size: .7rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
 @utility accent-text { background-image: linear-gradient(90deg, var(--brand-blue), var(--brand-violet)); background-clip: text; color: transparent; }
 @utility status-chip { display: inline-flex; border-radius: .25rem; background: var(--color-muted); padding: .2rem .4rem; color: var(--color-muted-foreground); }
-@utility hero-light { background: radial-gradient(ellipse 70% 75% at 100% 45%, color-mix(in oklab, var(--brand-blue) 45%, transparent), transparent 62%), linear-gradient(155deg, transparent 55%, color-mix(in oklab, var(--brand-violet) 18%, transparent)); }
+@utility hero-light { background-image: radial-gradient(ellipse 70% 75% at 100% 45%, color-mix(in oklab, var(--brand-blue) 45%, transparent), transparent 62%), linear-gradient(155deg, transparent 55%, color-mix(in oklab, var(--brand-violet) 18%, transparent)); }
