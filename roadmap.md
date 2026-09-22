@@ -5,4 +5,4 @@
 - [x] Build authentication and verification flows
 - [x] Build customer dashboard routes and issue details
 - [x] Build partner application and private partner dashboard
-- [ ] Verify desktop, tablet, and mobile layouts
+- [x] Verify desktop, tablet, and mobile layouts
