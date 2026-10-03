@@ -1,2 +1,2 @@
-import {createFileRoute,Outlet} from "@tanstack/react-router";
-export const Route=createFileRoute("/_authenticated/dashboard")({component:()=> <Outlet/>});
+import {createFileRoute,Outlet,redirect} from "@tanstack/react-router";import {supabase} from "@/integrations/supabase/client";
+export const Route=createFileRoute("/_authenticated/dashboard")({beforeLoad:async({context})=>{const {data}=await supabase.from("user_roles").select("role").eq("user_id",(context as any).user.id);const roles=(data??[]).map(r=>r.role);if(roles.includes("partner")&&!roles.includes("customer"))throw redirect({to:"/partner/dashboard"});},component:()=> <Outlet/>});
